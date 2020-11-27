@@ -33,25 +33,25 @@
             <li>
               文件名: <span style="font-size:14px;">{{ item.name }}</span>
               <Icon
-                @click="delWaitFileList(index)"
                 type="ios-close"
                 size="20"
                 style="float:right;"
+                @click="delWaitFileList(index)"
               ></Icon>
             </li>
           </ul>
           <Button
             :loading="loading"
-            @click="handleUpload"
             :disabled="modalType === 'readonly'"
             type="primary"
+            @click="handleUpload"
             >上传</Button
           >
         </Col>
       </template>
 
       <template v-if="!childProp.multiple">
-        <Col span="18" v-if="formData[childProp.prop]">
+        <Col v-if="formData[childProp.prop]" span="18">
           <a :href="formData[childProp.prop].url" target="_blank">{{
             formData[childProp.prop].name
           }}</a>
@@ -59,22 +59,22 @@
       </template>
       <template v-else>
         <Col
-          span="24"
           v-for="(item, index) in formData[childProp.prop]"
           :key="index"
+          span="24"
         >
           <a :href="item.url" target="_blank">{{ item.name }}</a>
           <Icon
-            @click="delFileList(index)"
             :disabled="modalType === 'readonly'"
             type="ios-close"
             size="20"
             style="float:right;"
+            @click="delFileList(index)"
           ></Icon>
         </Col>
       </template>
     </Row>
-    <Row style="position:relative;" v-if="loading">
+    <Row v-if="loading" style="position:relative;">
       <Spin><Tag color="warning">文件上传中 ! 请耐心等待...</Tag></Spin>
       <div style="margin:50px;position:relative;">
         <Spin fix size="large"></Spin>
@@ -92,13 +92,16 @@ export default {
   name: 'CpvFile',
   props: {
     childProp: {
-      type: Object
+      type: Object,
+      default: () => ({})
     },
     formData: {
-      type: Object
+      type: Object,
+      default: () => ({})
     },
     modalType: {
-      type: String
+      type: String,
+      default: 'readonly'
     }
   },
   data() {
@@ -247,10 +250,10 @@ export default {
         this.failMsg(res.msg)
       }
     },
-    uploadError(error, file, fileList) {
-      this.failMsg(res.msg)
+    uploadError(error) {
+      this.failMsg(error)
     },
-    handleMaxSize(file) {
+    handleMaxSize() {
       this.$Notice.warning({
         title: '超出文件大小限制',
         desc: '' + this.childProp.maxSize + ' 文件大小超出限制, 请不要超过10M.'

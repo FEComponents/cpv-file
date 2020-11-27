@@ -89,14 +89,35 @@ import axios from 'axios'
 export default {
   name: 'CpvFile',
   props: {
+    /**
+     * 表单属性相关
+     * { name: '附件上传',
+        prop: 'file',
+        required: true,
+        maxSize: 1024 * 10, //10M
+        multiple: false,
+        fileNum: 1,
+        token: '126dcc1f-5bb6-45b4-9c2a-1e74b28ecbe6',//请求携带的 token
+        baseUrl: 'oscs-api'//转发地址
+      }
+     */
     childProp: {
       type: Object,
+      required: true,
       default: () => ({})
     },
+    /**
+     * form对象
+     * { }
+     */
     formData: {
       type: Object,
+      required: true,
       default: () => ({})
     },
+    /**
+     * 表单状态：create、edit、readonly
+     */
     modalType: {
       type: String,
       default: 'readonly'

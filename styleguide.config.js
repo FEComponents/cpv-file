@@ -40,10 +40,12 @@ const sections = (() => {
 module.exports = {
   styleguideDir: 'docs',
   pagePerSection: true,
+  jsxInExamples: true,
   ribbon: {
     url: 'https://github.com/fe-components/cpv-file'
   },
   sections,
+  require: ['./styleguide/viewDesign.js'],
   webpackConfig: {
     module: {
       rules: [
@@ -65,7 +67,7 @@ module.exports = {
           loaders: ['vue-style-loader', 'css-loader', 'less-loader']
         },
         {
-          test: /\.(woff2?|eot|[ot]tf)(\?.*)?$/,
+          test: /\.(woff2?|eot|svg|[ot]tf)(\?.*)?$/,
           loader: 'file-loader'
         }
       ]

@@ -23,6 +23,7 @@ module.exports = {
       }
     ],
     'no-debugger': 'error',
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'vue/no-parsing-error': [2, {'x-invalid-end-tag': false}]
   }
 }

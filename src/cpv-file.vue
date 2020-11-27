@@ -17,7 +17,7 @@
             :max-size="1024 * childProp.maxSize"
             :on-exceeded-size="handleMaxSize"
             :multiple="childProp.multiple"
-            :action="baseUrl + '/file-api/uploadFile'"
+            :action="childProp.baseUrl + '/file-api/uploadFile'"
           >
             <Button icon="ios-cloud-upload-outline">上传文件</Button>
           </Upload>
@@ -76,7 +76,7 @@
     </Row>
     <Row v-if="loading" style="position:relative;">
       <Spin><Tag color="warning">文件上传中 ! 请耐心等待...</Tag></Spin>
-      <div style="margin:50px;position:relative;">
+      <div style="margin:50px; position:relative;">
         <Spin fix size="large"></Spin>
       </div>
     </Row>
@@ -85,8 +85,6 @@
 
 <script>
 import axios from 'axios'
-import config from '@/config'
-import {getToken} from '@/libs/util'
 
 export default {
   name: 'CpvFile',
@@ -111,21 +109,15 @@ export default {
     }
   },
   computed: {
-    baseUrl() {
-      let url =
-        process.env.NODE_ENV === 'development'
-          ? config.baseUrl.dev
-          : config.baseUrl.pro
-      return url
-    },
     headers() {
-      return this.childProp.multiple
+      let childProp = this.childProp
+      return childProp.multiple
         ? {
             'Content-Type': 'multipart/form-data',
-            'GATEWAY-TOKEN': this.getTokens()
+            'GATEWAY-TOKEN': childProp.token
           }
         : {
-            'GATEWAY-TOKEN': this.getTokens()
+            'GATEWAY-TOKEN': childProp.token
           }
     },
     ruleValidate() {
@@ -146,9 +138,6 @@ export default {
     }
   },
   methods: {
-    getTokens() {
-      return getToken()
-    },
     delWaitFileList(index) {
       this.waitUpload.splice(index, 1)
     },

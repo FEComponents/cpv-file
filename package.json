@@ -10,8 +10,10 @@
   },
   "keywords": [
     "vue",
-    "sfc",
-    "component"
+    "iview",
+    "component",
+    "cpv",
+    "file"
   ],
   "files": [
     "src",

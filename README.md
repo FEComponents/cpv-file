@@ -1,7 +1,7 @@
 <!--
  * @Author: yuwangi
  * @Date: 2020-11-26 20:18:40
- * @LastEditTime: 2020-11-28 11:58:38
+ * @LastEditTime: 2020-11-28 12:14:25
  * @LastEditors: your name
  * @Description: In User Settings Edit
  * @FilePath: \npm\cpv-file\README.md
@@ -9,7 +9,7 @@
 
 # cpv-file
 
-[![Build Status](https://badgen.net/travis/fe-components/cpv-file/main)](https://travis-ci.com/fe-components/cpv-file)
+[![Build Status](https://badgen.net/travis/FEComponents/cpv-file/main)](https://travis-ci.com/fe-components/cpv-file)
 [![NPM Download](https://badgen.net/npm/dm/@fe-components/cpv-file)](https://www.npmjs.com/package/@fe-components/cpv-file)
 [![NPM Version](https://badge.fury.io/js/%40fe-components%2Fcpv-file.svg)](https://www.npmjs.com/package/@fe-components/cpv-file)
 [![NPM License](https://badgen.net/github/license/FEComponents/cpv-file)](https://github.com/fe-components/cpv-file/blob/main/LICENSE)

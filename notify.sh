@@ -12,11 +12,11 @@ REPO_NAME=$(echo "$TRAVIS_REPO_SLUG" | cut -d '/' -f 2)
 
 echo "2/5: pushing commit and tag to github"
 # 该命令很可能报错，但不影响实际进行，因而不能简单地在脚本开头 set -e
-git remote add github https://46d2211730a0fceff92cd842a60f651c458d1c3d@github.com/$TRAVIS_REPO_SLUG.git > /dev/null 2>&1
+git remote add github https://d736bb2958e912593eefe9424e683774005a563e@github.com/$TRAVIS_REPO_SLUG.git > /dev/null 2>&1
 git push github HEAD:main --follow-tags
 
 echo "3/5: generating github release notes"
-GREN_GITHUB_TOKEN=46d2211730a0fceff92cd842a60f651c458d1c3d yarn release
+GREN_GITHUB_TOKEN=d736bb2958e912593eefe9424e683774005a563e yarn release
 
 # 避免发送错误信息
 if [ $? -ne 0 ]
@@ -29,7 +29,7 @@ echo "4/5: downloading github release info"
 url=https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases/latest
 resp_tmp_file=resp.tmp
 
-curl -H "Authorization: token 46d2211730a0fceff92cd842a60f651c458d1c3d" $url > $resp_tmp_file
+curl -H "Authorization: token d736bb2958e912593eefe9424e683774005a563e" $url > $resp_tmp_file
 
 html_url=$(sed -n 5p $resp_tmp_file | sed 's/\"html_url\"://g' | awk -F '"' '{print $2}')
 body=$(grep body < $resp_tmp_file | sed 's/\"body\"://g;s/\"//g')

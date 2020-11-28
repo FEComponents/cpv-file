@@ -10,7 +10,7 @@ install:
   - yarn --frozen-lockfile
   - yarn test
 before_script:
-  - chmod +x gradlew
+  - chmod +x build.sh  notify.sh
 script:
   - ./build.sh
 after_script:

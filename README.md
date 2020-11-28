@@ -1,7 +1,7 @@
 <!--
  * @Author: yuwangi
  * @Date: 2020-11-26 20:18:40
- * @LastEditTime: 2020-11-28 11:38:07
+ * @LastEditTime: 2020-11-28 11:58:38
  * @LastEditors: your name
  * @Description: In User Settings Edit
  * @FilePath: \npm\cpv-file\README.md
@@ -85,7 +85,10 @@ Please refer to our [contributing guide](https://github.com/FEComponents/.github
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <table>
-  <tr><td align="center"><a href="https://yuwangi.github.io"><img src="https://static.opechk.com/dist/other/343046650.jpg" width="100px;" alt="" /><br /><sub><b>yuwangi</b></sub></a><br /><a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Code">💻</a> <a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Documentation">📖</a> <a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Tests">⚠️</a> <a href="#translation-yuwangi" title="Translation">🌍</a><a href="https://github.com/FEComponents/cpv-file/issues?q=author%3Alianghx-319" title="Bug reports">🐛</a></td></tr>
+  <tr><td align="center"><a href="https://yuwangi.github.io"><img src="https://static.opechk.com/dist/other/343046650.jpg" width="100px;" alt="" /><br /><sub><b>yuwangi</b></sub></a><br /><a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Code">💻</a> <a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Documentation">📖</a> <a href="https://github.com/FEComponents/cpv-file/commits?author=yuwangi" title="Tests">⚠️</a> <a href="#translation-yuwangi" title="Translation">🌍</a><a href="https://github.com/FEComponents/cpv-file/issues?q=author%3Ayuwangi" title="Bug reports">🐛</a></td>
+  <td align="center"><a href="https://github.com/ynwshy"><img src="https://static.opechk.com/dist/other/28115432.jpg" width="100px;" alt="" /><br /><sub><b>ynwshy</b></sub></a><br /><a href="https://github.com/FEComponents/cpv-file/commits?author=ynwshy" title="Code">💻</a> <a href="https://github.com/FEComponents/cpv-file/issues?q=author%3Aynwshy" title="Bug reports">🐛</a></td>
+  </tr>
+  
 </table>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

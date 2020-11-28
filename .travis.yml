@@ -9,6 +9,8 @@ git:
 install:
   - yarn --frozen-lockfile
   - yarn test
+before_script:
+  - chmod +x gradlew
 script:
   - ./build.sh
 after_script:

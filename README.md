@@ -1,6 +1,6 @@
 <!--
  * @Author: ywuangi
- * @LastEditTime: 2020-11-28 14:01:45
+ * @LastEditTime: 2020-11-30 18:32:00
  * @LastEditors: your name
  * @Description:
 -->
@@ -15,7 +15,7 @@
 
 # cpv-file
 
-[![Build Status](https://badgen.net/travis/FEComponents/cpv-file/main)](https://travis-ci.com/fe-components/cpv-file)
+[![Build Status](https://travis-ci.org/FEComponents/cpv-file.svg?branch=main)](https://travis-ci.org/FEComponents/cpv-file.svg?branch=main)
 [![NPM Download](https://badgen.net/npm/dm/@fe-components/cpv-file)](https://www.npmjs.com/package/@fe-components/cpv-file)
 [![NPM Version](https://badge.fury.io/js/%40fe-components%2Fcpv-file.svg)](https://www.npmjs.com/package/@fe-components/cpv-file)
 [![NPM License](https://badgen.net/github/license/FEComponents/cpv-file)](https://github.com/fe-components/cpv-file/blob/main/LICENSE)

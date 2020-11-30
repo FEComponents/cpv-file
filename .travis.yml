@@ -17,13 +17,6 @@ after_script:
   - ./notify.sh
 cache: yarn
 deploy:
-  # - provider: pages # you may delete this provider if you don't need deployment of github pages
-  #   local-dir: docs # https://docs.travis-ci.com/user/deployment/packagecloud/#specify-package-folder
-  #   github-token: $GITHUB_TOKEN
-  #   skip-cleanup: true
-  #   keep-history: true
-  #   on:
-  #     branch: main
   - provider: npm
     email: yuwangifeng@163.com # use your own email
     api_key: $NPM_TOKEN

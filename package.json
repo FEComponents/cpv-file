@@ -1,7 +1,7 @@
 {
   "name": "@fe-components/cpv-file",
-  "version": "1.0.7",
-  "description": "",
+  "version": "1.0.8",
+  "description": "🔨 A Component for upload file.",
   "author": "https://github.com/fe-components",
   "license": "MIT",
   "repository": {
@@ -30,7 +30,7 @@
     "dev": "vue-styleguidist server",
     "test": "jest --verbose",
     "doc": "vue-styleguidist build",
-    "build": "npm run build:unpkg & npm run build:es & npm run build:umd & npm run doc",
+    "build": "npm run build:unpkg & npm run build:es & npm run build:umd & npm run doc & npm version patch",
     "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/cpv-file.umd.js",
     "build:es": "rollup --config build/rollup.config.js --format es --file dist/cpv-file.esm.js",
     "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/cpv-file.min.js",

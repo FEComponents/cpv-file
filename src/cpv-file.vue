@@ -5,6 +5,7 @@
     :rules="ruleValidate"
   >
     <Row>
+      <!-- form表单状态判断 -->
       <template v-if="modalType !== 'readonly'">
         <Col span="6">
           <Upload
@@ -14,7 +15,7 @@
             :on-error="uploadError"
             :headers="headers"
             :before-upload="handleBeforeUpload"
-            :max-size="1024 * childProp.maxSize"
+            :max-size="1024 * childProp.maxSize"//1kb 的倍数
             :on-exceeded-size="handleMaxSize"
             :multiple="childProp.multiple"
             :action="childProp.baseUrl + '/file-api/uploadFile'"
@@ -23,6 +24,7 @@
           </Upload>
         </Col>
       </template>
+      <!-- 等待上传的文件列表 -->
       <template v-if="waitUpload.length > 0">
         <Col span="24">
           <ul
@@ -42,14 +44,13 @@
           </ul>
           <Button
             :loading="loading"
-            :disabled="modalType === 'readonly'"
             type="primary"
             @click="handleUpload"
             >上传</Button
           >
         </Col>
       </template>
-
+      <!-- 单个文件上传 -->
       <template v-if="!childProp.multiple">
         <Col v-if="formData[childProp.prop]" span="18">
           <a :href="formData[childProp.prop].url" target="_blank">{{
@@ -57,13 +58,16 @@
           }}</a>
         </Col>
       </template>
+      <!-- 多个文件上传 -->
       <template v-else>
         <Col
           v-for="(item, index) in formData[childProp.prop]"
           :key="index"
           span="24"
         >
+          <!-- 点击打开文件链接 -->
           <a :href="item.url" target="_blank">{{ item.name }}</a>
+          <!-- 删除文件 -->
           <Icon
             :disabled="modalType === 'readonly'"
             type="ios-close"
@@ -74,6 +78,7 @@
         </Col>
       </template>
     </Row>
+    <!-- loading效果 -->
     <Row v-if="loading" style="position:relative;">
       <Spin><Tag color="warning">文件上传中 ! 请耐心等待...</Tag></Spin>
       <div style="margin:50px; position:relative;">
@@ -130,6 +135,7 @@ export default {
     }
   },
   computed: {
+    //上传请求的headers
     headers() {
       let childProp = this.childProp
       return childProp.multiple
@@ -141,6 +147,7 @@ export default {
             'GATEWAY-TOKEN': childProp.token
           }
     },
+    //表单校验
     ruleValidate() {
       let childProp = this.childProp
       let multiple = childProp.multiple
@@ -159,22 +166,26 @@ export default {
     }
   },
   methods: {
+    // 删除待上传文件
     delWaitFileList(index) {
       this.waitUpload.splice(index, 1)
     },
+    //删除已上传文件
     delFileList(index) {
       this.formData[this.childProp.prop].splice(index, 1)
     },
+    //文件上传前钩子
     handleBeforeUpload(file) {
       let childProp = this.childProp
       let formData = this.formData
       let that = this
-      if (childProp.multiple) {
+      
+      if (childProp.multiple) {//是否支持多个
         let waitUploadLength = that.waitUpload.length || 0
         let curLength = formData[childProp.prop]?.length || 0
         // 限制长度
 
-        if (waitUploadLength + curLength >= childProp.fileNum) {
+        if (waitUploadLength + curLength >= childProp.fileNum) {//上传数量限制
           this.$Message.info(`最多只能上传${childProp.fileNum}个文件`)
         } else {
           that.waitUpload.push(file)
@@ -187,6 +198,7 @@ export default {
         return true
       }
     },
+    //手动上传
     handleUpload() {
       let that = this
       let childProp = this.childProp
@@ -222,7 +234,7 @@ export default {
               let cur = formData[childProp.prop] || []
 
               let total = cur.concat(arrays)
-              if (!formData[childProp.prop]) {
+              if (!formData[childProp.prop]) {//判断当前form有无当前属性 而赋值
                 that.$set(formData, childProp.prop, total)
               } else {
                 formData[childProp.prop] = total
@@ -240,6 +252,7 @@ export default {
         that.$Message.error('请至少上传一个文件')
       }
     },
+    //上传成功钩子
     uploadSuccess(res, file) {
       this.loading = false
       if (res.code === '0') {
@@ -260,21 +273,25 @@ export default {
         this.failMsg(res.msg)
       }
     },
+    //上传失败
     uploadError(error) {
       this.failMsg(error)
     },
+    //文件大小超出
     handleMaxSize() {
       this.$Notice.warning({
         title: '超出文件大小限制',
         desc: '' + this.childProp.maxSize + ' 文件大小超出限制, 请不要超过10M.'
       })
     },
+    //文件格式校验
     upFormatError(file) {
       this.$Notice.warning({
         title: '超出文件大小限制',
         desc: '' + file.name + '格式不正确，仅支持压缩(zip/rar)格式的文件'
       })
     },
+    //下载
     linkDownload(url) {
       window.open(url, '_blank') // 新窗口打开外链接
     }

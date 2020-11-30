@@ -1,4 +1,4 @@
 #!/bin/sh
-yarn stdver
+# yarn stdver
 
 yarn build

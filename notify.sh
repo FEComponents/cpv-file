@@ -1,7 +1,7 @@
 #!/bin/sh
 # https://stackoverflow.com/questions/13872048/bash-script-what-does-bin-bash-mean
 echo "1/5: checking TRAVIS_TEST_RESULT"
-echo TRAVIS_TEST_RESULT
+echo $TRAVIS_TEST_RESULT
 if [ "$TRAVIS_TEST_RESULT" != "0" ]
 then
   echo "build not success, bye"

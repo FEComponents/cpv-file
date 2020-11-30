@@ -15,7 +15,7 @@
             :on-error="uploadError"
             :headers="headers"
             :before-upload="handleBeforeUpload"
-            :max-size="1024 * childProp.maxSize"//1kb 的倍数
+            :max-size="1024 * childProp.maxSize"
             :on-exceeded-size="handleMaxSize"
             :multiple="childProp.multiple"
             :action="childProp.baseUrl + '/file-api/uploadFile'"
@@ -42,10 +42,7 @@
               ></Icon>
             </li>
           </ul>
-          <Button
-            :loading="loading"
-            type="primary"
-            @click="handleUpload"
+          <Button :loading="loading" type="primary" @click="handleUpload"
             >上传</Button
           >
         </Col>
@@ -179,13 +176,15 @@ export default {
       let childProp = this.childProp
       let formData = this.formData
       let that = this
-      
-      if (childProp.multiple) {//是否支持多个
+
+      if (childProp.multiple) {
+        //是否支持多个
         let waitUploadLength = that.waitUpload.length || 0
         let curLength = formData[childProp.prop]?.length || 0
         // 限制长度
 
-        if (waitUploadLength + curLength >= childProp.fileNum) {//上传数量限制
+        if (waitUploadLength + curLength >= childProp.fileNum) {
+          //上传数量限制
           this.$Message.info(`最多只能上传${childProp.fileNum}个文件`)
         } else {
           that.waitUpload.push(file)
@@ -234,7 +233,8 @@ export default {
               let cur = formData[childProp.prop] || []
 
               let total = cur.concat(arrays)
-              if (!formData[childProp.prop]) {//判断当前form有无当前属性 而赋值
+              if (!formData[childProp.prop]) {
+                //判断当前form有无当前属性 而赋值
                 that.$set(formData, childProp.prop, total)
               } else {
                 formData[childProp.prop] = total

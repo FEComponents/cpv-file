@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.11](https://github.com/FEcomponents/cpv-file/compare/v1.0.10...v1.0.11) (2020-12-02)
+
+
+### Bug Fixes
+
+* readme ([0305eba](https://github.com/FEcomponents/cpv-file/commit/0305eba))
+* 改版 ([18f35fc](https://github.com/FEcomponents/cpv-file/commit/18f35fc))
+
+
+
 ### [1.0.10](https://github.com/FEcomponents/cpv-file/compare/v1.0.9...v1.0.10) (2020-11-30)
 
 

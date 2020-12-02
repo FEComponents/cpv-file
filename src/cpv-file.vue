@@ -1,12 +1,8 @@
 <template>
-  <FormItem
-    :label="childProp.name"
-    :prop="childProp.prop"
-    :rules="ruleValidate"
-  >
+  <FormItem :label="name" :prop="prop" :rules="ruleValidate" v-bind="$attrs">
     <Row>
       <!-- form表单状态判断 -->
-      <template v-if="modalType !== 'readonly'">
+      <template v-if="!isOnlyRead">
         <Col span="6">
           <Upload
             ref="upload"
@@ -15,10 +11,10 @@
             :on-error="uploadError"
             :headers="headers"
             :before-upload="handleBeforeUpload"
-            :max-size="1024 * childProp.maxSize"
+            :max-size="1024 * maxSize"
             :on-exceeded-size="handleMaxSize"
-            :multiple="childProp.multiple"
-            :action="childProp.baseUrl + '/file-api/uploadFile'"
+            :multiple="multiple"
+            :action="baseUrl + '/file-api/uploadFile'"
           >
             <Button icon="ios-cloud-upload-outline">上传文件</Button>
           </Upload>
@@ -48,25 +44,21 @@
         </Col>
       </template>
       <!-- 单个文件上传 -->
-      <template v-if="!childProp.multiple">
-        <Col v-if="formData[childProp.prop]" span="18">
-          <a :href="formData[childProp.prop].url" target="_blank">{{
-            formData[childProp.prop].name
+      <template v-if="!multiple">
+        <Col v-if="formData[prop]" span="18">
+          <a :href="formData[prop].url" target="_blank">{{
+            formData[prop].name
           }}</a>
         </Col>
       </template>
       <!-- 多个文件上传 -->
       <template v-else>
-        <Col
-          v-for="(item, index) in formData[childProp.prop]"
-          :key="index"
-          span="24"
-        >
+        <Col v-for="(item, index) in formData[prop]" :key="index" span="24">
           <!-- 点击打开文件链接 -->
           <a :href="item.url" target="_blank">{{ item.name }}</a>
           <!-- 删除文件 -->
           <Icon
-            :disabled="modalType === 'readonly'"
+            :disabled="isOnlyRead"
             type="ios-close"
             size="20"
             style="float:right;"
@@ -88,41 +80,44 @@
 <script>
 import axios from 'axios'
 
+import Emitter from './mixins/emitter'
+import mixinsForm from './mixins/form'
+
 export default {
   name: 'CpvFile',
+  mixins: [Emitter, mixinsForm],
   props: {
-    /**
-     * 表单属性相关
-     * { name: '附件上传',
-        prop: 'file',
-        required: true,
-        maxSize: 1024 * 10, //10M
-        multiple: false,
-        fileNum: 1,
-        token: '126dcc1f-5bb6-45b4-9c2a-1e74b28ecbe6',//请求携带的 token
-        baseUrl: 'oscs-api'//转发地址
-      }
-     */
-    childProp: {
-      type: Object,
-      required: true,
-      default: () => ({})
+    /** 名称 */
+    name: {
+      type: String
     },
-    /**
-     * form对象
-     * { }
-     */
-    formData: {
-      type: Object,
-      required: true,
-      default: () => ({})
+    /** 属性 */
+    prop: {
+      type: String
     },
-    /**
-     * 表单状态：create、edit、readonly
-     */
-    modalType: {
-      type: String,
-      default: 'readonly'
+    /** 是否必填 */
+    required: {
+      type: Boolean
+    },
+    /** 最大文件大小 以M为单位 */
+    maxSize: {
+      type: [Number, String]
+    },
+    /** 是否多选 */
+    multiple: {
+      type: Boolean
+    },
+    /** 文件个数 */
+    fileNum: {
+      type: [Number, String]
+    },
+    /** token */
+    token: {
+      type: String
+    },
+    /** 统一转发地址 */
+    baseUrl: {
+      type: String
     }
   },
   data() {
@@ -134,26 +129,24 @@ export default {
   computed: {
     //上传请求的headers
     headers() {
-      let childProp = this.childProp
-      return childProp.multiple
+      return this.multiple
         ? {
             'Content-Type': 'multipart/form-data',
-            'GATEWAY-TOKEN': childProp.token
+            'GATEWAY-TOKEN': this.token
           }
         : {
-            'GATEWAY-TOKEN': childProp.token
+            'GATEWAY-TOKEN': this.token
           }
     },
     //表单校验
     ruleValidate() {
-      let childProp = this.childProp
-      let multiple = childProp.multiple
-      if (childProp.required) {
+      let multiple = this.multiple
+      if (this.required) {
         return [
           {
             required: true,
             type: multiple ? 'array' : 'object',
-            message: '请上传' + childProp.name,
+            message: '请上传' + this.name,
             trigger: 'change'
           }
         ]
@@ -169,28 +162,28 @@ export default {
     },
     //删除已上传文件
     delFileList(index) {
-      this.formData[this.childProp.prop].splice(index, 1)
+      this.formData[this.prop].splice(index, 1)
     },
     //文件上传前钩子
     handleBeforeUpload(file) {
-      let childProp = this.childProp
       let formData = this.formData
+      let multiple = this.multiple
       let that = this
 
-      if (childProp.multiple) {
+      if (multiple) {
         //是否支持多个
         let waitUploadLength = that.waitUpload.length || 0
-        let curLength = formData[childProp.prop]?.length || 0
+        let curLength = formData[this.prop]?.length || 0
         // 限制长度
 
-        if (waitUploadLength + curLength >= childProp.fileNum) {
+        if (waitUploadLength + curLength >= this.fileNum) {
           //上传数量限制
-          this.$Message.info(`最多只能上传${childProp.fileNum}个文件`)
+          this.$Message.info(`最多只能上传${this.fileNum}个文件`)
         } else {
           that.waitUpload.push(file)
         }
         return false
-      } else if (!childProp.multiple) {
+      } else if (!multiple) {
         this.loading = true
         return true
       } else {
@@ -200,8 +193,8 @@ export default {
     //手动上传
     handleUpload() {
       let that = this
-      let childProp = this.childProp
       let formData = this.formData
+      let prop = this.prop
       if (that.waitUpload.length > 0) {
         that.loading = true
         // 创建 formData 对象
@@ -230,14 +223,14 @@ export default {
                   name: elems.fileName
                 })
               })
-              let cur = formData[childProp.prop] || []
+              let cur = formData[prop] || []
 
               let total = cur.concat(arrays)
-              if (!formData[childProp.prop]) {
+              if (!formData[prop]) {
                 //判断当前form有无当前属性 而赋值
-                that.$set(formData, childProp.prop, total)
+                that.$set(formData, prop, total)
               } else {
-                formData[childProp.prop] = total
+                formData[prop] = total
               }
             } else {
               that.loading = false
@@ -258,16 +251,16 @@ export default {
       if (res.code === '0') {
         file.url = res.content
 
-        let childProp = this.childProp
+        let prop = this.prop
         let formData = this.formData
 
-        if (!formData[childProp]) {
-          this.$set(this.formData, this.childProp.prop, {
+        if (!formData[prop]) {
+          this.$set(this.formData, prop, {
             url: res.content,
             name: file.name
           })
         } else {
-          formData[childProp] = {url: res.content, name: file.name}
+          formData[prop] = {url: res.content, name: file.name}
         }
       } else {
         this.failMsg(res.msg)
@@ -281,7 +274,7 @@ export default {
     handleMaxSize() {
       this.$Notice.warning({
         title: '超出文件大小限制',
-        desc: '' + this.childProp.maxSize + ' 文件大小超出限制, 请不要超过10M.'
+        desc: '' + this.maxSize + ' 文件大小超出限制, 请不要超过10M.'
       })
     },
     //文件格式校验

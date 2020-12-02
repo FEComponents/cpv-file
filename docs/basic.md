@@ -1,6 +1,6 @@
 <!--
  * @Author: ywuangi
- * @LastEditTime: 2020-11-28 13:57:59
+ * @LastEditTime: 2020-12-02 12:00:06
  * @LastEditors: your name
  * @Description:
 -->
@@ -9,11 +9,7 @@
 <template>
   <div>
     <Form ref="formData" :model="formData" :label-width="160">
-      <cpv-file
-        :childProp="childProp"
-        :formData="formData"
-        :modalType="modalType"
-      />
+      <cpv-file v-bind="childProp" />
     </Form>
     <Button @click="submit" type="success">提交</Button>
     {{ formData }}
@@ -38,8 +34,11 @@ export default {
         baseUrl: 'oscs-api' //转发地址
       },
       formData: {},
-      modalType: 'create'
+      modalType: 'readonly'
     }
+  },
+  provide() {
+    return {formData: this.formData, modalType: this.modalType}
   },
   methods: {
     submit() {
